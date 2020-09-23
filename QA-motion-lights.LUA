@@ -1,5 +1,5 @@
 --==--==--==--==--==--==--==--==--==--==--==--==--==--==--==--==--==--==--==--==--==--==--==--==--==--==--==--==--==--==
-local version = "Motion lights QA v1.2.090920.3"
+local version = "Motion lights QA v1.2.090922.1"
 
 if dofile and not hc3_emulator then
     require("fibaro")
@@ -545,7 +545,7 @@ function checkMotion(dev)
                                 if (gOverride ~= "OFF") then
                                     local level = params.level or 99
                                     log(dev, "[on" .. " : " .. level .. "]")
-                                    dev.power_state = 1
+                                    dev.power_state = 99
                                     setPowerState(dev, level)
                                 else
                                     log(dev, "[lighting `on` ignored by global override]")
@@ -565,6 +565,7 @@ function checkMotion(dev)
                 local level = params.level or 99
                 if dev.power_state == 0 or dev.power_state == dev.levelOff or dev.power_state < level then -- device turned on and not by me
                     log(dev, "[was [on] manualy]")
+                    dev.power_state = 99
                     setPowerState(dev, level)
                     log(dev, "[set run level to " .. level .. "]")
                 end
